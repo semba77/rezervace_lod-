@@ -14,10 +14,8 @@ def check_nickname():
     print(nick)
     print(nicknames)
     if nick in nicknames:
-        print("7777777")
         return jsonify({"exists": True})
     else:
-        print("9999999")
         return jsonify({"exists": False})
 
 
@@ -30,11 +28,8 @@ def druha_stranka():
         data2 = request.form.get('nick')
         data3 = request.form.get('kanoe_kamarad')
         if data1 == "True":
-            print("111111")
             if re.search("[a-zA-Z0-9]{2,20}",data2):
-                print("2222222")
                 if re.search("[a-zA-Z0-9]{2,20}",data3):
-                    print("3333333")
                     zprava.append([data2, data3])
                     nicknames.add(data2)
                     return render_template('prvni_stranka.html', zprava=zprava), 200
@@ -43,10 +38,8 @@ def druha_stranka():
                     nicknames.add(data2)
                     return render_template('prvni_stranka.html', zprava=zprava), 200
             else:
-                print("----111111")
                 return render_template('druha_stranka.html'), 400
         else:
-            print("--111111")
             return render_template('druha_stranka.html'), 400
 
 
