@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" href="/static/mujstyl.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<title>Druhá stránka</title>
+<body>
+
+<h1>registrace</h1>
+
+<form id="form1" action="/registrace" method="POST">
+    <input type="text" name="nick" id="nick" value="jmeno"><br>
+    <label> je plavec:</label><br>
+    <input type="radio" name="je_plavec" value="True" id="je_plavec">
+    <label for="je_plavec">ano</label><br>
+    <input type="radio" name="je_plavec" value="False" id="je_plavec">
+    <label for="je_plavec">ne</label><br>
+    <input type="text" name="kanoe_kamarad" id="kanoe_kamarad" value="kamarad"><br>
+    <input type="submit" value="Odeslat">
+</form>
+<script type="text/javascript">
+    $(document).ready(function(){
+     $("#form1").submit(function(event){
+       event.preventDefault();
+         var nick = $("#nick").val();
+         var jePlavec = $("input[name='je_plavec']:checked").val();
+         var kanoeKamarad = $("#kanoe_kamarad").val();
+         
+         if (nick.length < 2 || nick.length > 20) {
+             alert("Neplatný nick.");
+             
+             return false;
+         }
+
+         if (jePlavec != "True") {
+             alert("Musíte být plavec");
+             
+             return false;
+         }
+         $.ajax({
+            url: "/api/check-nickname?nick=" + nick,
+            type: "GET",
+            success: function(response) {
+                if (response.exists) {
+                    alert("Tento nickname je již použitý. Prosím, zvolte jiný.");
+                    event.preventDefault();
+                } else {
+                  
+          var form = document.getElementById("form1");
+          form.submit();
+        }
+        },
+        });
+
+        });
+    });
+    </script>
+<p><a href="/">Jdi zpět</a>.</p>
+</body>
+</html>
