@@ -6,10 +6,16 @@ nicknames = set()
 zprava=[]
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """
+    Endpont, ktery vygeneruje privni_stranka.html, a posila atribut zprava
+    """
     return render_template('prvni_stranka.html', zprava=zprava), 200
 
 @app.route('/api/check-nickname', methods=['GET'])
 def check_nickname():
+    """
+    kontroluje jestli je v query atribut nick a vraci jestli nick uz neni ulozen
+    """
     nick = request.args.get('nick')
     print(nick)
     print(nicknames)
@@ -21,6 +27,12 @@ def check_nickname():
 
 @app.route('/registrace', methods=['GET', 'POST'])
 def druha_stranka():
+    """
+    GET
+        renderuje druha_stranka.html
+    POT
+        jestli jsou validni data, tak renderuje prvni nebo druhou stranku
+    """
     if request.method == 'GET':
         return render_template('druha_stranka.html', zprava=zprava), 200
     if request.method == 'POST':
